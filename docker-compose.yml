@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  nginx_cache:
+    image: nginx:latest
+    hostname: nginx-cache
+    container_name: nginx-cache
+    ports:
+      - '${PROJECT_HOST}:80:80'
+    volumes:
+      - ./docker/nginx/proxy.conf:/etc/nginx/conf.d/default.conf
+      - /var/www
+
+  nginx_static:
+    image: nginx:latest
+    hostname: nginx-static
+    container_name: nginx-static
+    ports:
+      - '${PROJECT_HOST}:8080:80'
+    volumes:
+      - ./docker/nginx/static.conf:/etc/nginx/conf.d/default.conf
+      - ./src:/var/www
